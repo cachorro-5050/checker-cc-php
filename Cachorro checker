@@ -1,0 +1,83 @@
+<?php 
+	if ( vacío ( $ _POST [ 'cc-list' ])){
+		encabezado ( "Ubicación: index.php" );
+	}
+	informe_error ( 0 );
+ ?>
+<!DOCTYPEhtml >
+< html  lang =" es " >
+< cabeza >
+	< juego de caracteres meta  =" UTF-8 " >
+	< title > Verificador de crédito de tarjeta de código abierto </ title >
+	< enlace  rel =" hoja de estilo " href =" estilo/estilo.css " >
+	< link  href =" https://fonts.googleapis.com/css?family=Open+Sans " rel =" hoja de estilo " >
+	< script  src =" https://use.fontawesome.com/6ed0465ccd.js " > </ script >
+	< script  src =" https://code.jquery.com/jquery-3.2.1.js "
+  integridad =" sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE= "
+  crossorigin =" anónimo " > </ script >
+  	< guión >
+  		$ ( documento ) . listo ( función ( )  {
+  			$ ( "#cc-borrar" ) . hacer clic ( función ( e )  {
+
+  				mi . prevenirPredeterminado ( ) ;
+  				$ ( "#cc-lista" ) . vacío ( ) ;
+  			} ) ;
+  		} ) ;
+  	</ guión >
+</ cabeza >
+< cuerpo >
+<!-- Contenido de inicio -->
+	< div  clase =" contenido " >
+< h1 > Resultados </ h1 >
+		< br >
+		< estilo de tabla  =" ancho: 100% " >
+			< tr >
+				< th > Resultado </ th >
+				< th > Número de tarjeta </ th >
+				< th > Mes </ th >
+				< th > Año </ th >
+				< th > CVV </ th >
+			</ tr ><?php
+			// Proceso de Verificación de Tarjeta
+				$ lista = explotar ( "\n" , $ _POST [ 'cc-list' ]);
+				foreach ( $ lista  como  $ clave => $ cc ) {
+
+					$ tarjeta = explotar ( "|" , $ cc )[ 0 ];
+					$ mes = explotar ( "|" , $ cc )[ 1 ];
+					$ año = explotar ( "|" , $ cc )[ 2 ];
+					$ cvv = explotar ( "|" , $ cc )[ 3 ];
+					if (!( vacío ( $ tarjeta ) && vacío ( $ mes ) && vacío ( $ año ) && vacío ( $ cvv ))){
+						//POST DATOS DE PAGO/*
+						
+								INFORMACIÓN DE LA PUERTA DE ENLACE
+								INFORMACIÓN DE LA PUERTA DE ENLACE
+								INFORMACIÓN DE LA PUERTA DE ENLACE
+					*/pago_url = 	 "http://localhost/site/fake-gate.php" ;	
+					$ postdata = "cardnumber=$card&mouth=$mes&year=$year&cvv=$cvv&buy=Comprar" ;
+					$ success_message = "¡Pagado con éxito!" ;
+// Iniciar un curl en alguna pasarela de pago
+					$ curl = curl_init ( $ pago_url ); //Esta es una puerta de enlace falsa, creada por mí..
+					curl_setopt ( $ curl , CURLOPT_RETURNTRANSFER , 1 );
+					curl_setopt ( $ curl , CURLOPT_POST , 1 );
+					curl_setopt ( $ curl , CURLOPT_POSTFIELDS , $ postdata );
+			//Si contiene el mensaje de éxito en la página de resultados, cc está activo
+					if ( strpos ( $ resultado , $ mensaje_de_éxito )){
+						echo  "<tr style='color: verde'>" ;
+						echo  "<td>EN VIVO</td>" ;
+						echo  "<td>$tarjeta</td>" ;
+						echo  "<td>$mes</td>" ;
+						echo  "<td>$año</td>" ;
+						echo  "<td>$cvv</td>" ;
+						eco  "</tr>" ;
+					} más {
+						echo  "<tr style='color: #fe3131'>" ;
+						echo  "<td>MORIR</td>" ;
+						echo  "<td>$tarjeta</td>" ;
+						echo  "<td>$mes</td>" ;
+						echo  "<td>$año</td>" ;
+						echo  "<td>$cvv</td>" ;
+						eco  "</tr>" ;
+					}
+		$ resultado = curl_exec ( $ curl );
+
+
